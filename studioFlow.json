@@ -1,0 +1,154 @@
+{
+  "description": "A New Flow",
+  "states": [
+    {
+      "name": "Trigger",
+      "type": "trigger",
+      "transitions": [
+        {
+          "event": "incomingMessage"
+        },
+        {
+          "next": "CreateConversation",
+          "event": "incomingCall"
+        },
+        {
+          "event": "incomingConversationMessage"
+        },
+        {
+          "event": "incomingRequest"
+        },
+        {
+          "event": "incomingParent"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 0,
+          "y": 0
+        }
+      }
+    },
+    {
+      "name": "connect_virtual_agent_1",
+      "type": "connect-virtual-agent-v2",
+      "transitions": [
+        {
+          "event": "completed"
+        },
+        {
+          "next": "send_to_flex_1",
+          "event": "live-agent-handoff"
+        },
+        {
+          "event": "hangup"
+        },
+        {
+          "event": "failed"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 200,
+          "y": 580
+        },
+        "status_callback_method": "POST",
+        "configurations": [
+          {
+            "value": "en-AU-Neural2-A",
+            "key": "voiceName"
+          },
+          {
+            "value": "en-AU",
+            "key": "language"
+          }
+        ],
+        "status_callback": "https://dialogflowvoiceconversations-3973.twil.io/voiceVirtualAgentStatusCallback",
+        "connector_name": "TravelBot",
+        "parameters": [
+          {
+            "value": "{{trigger.call.From}}",
+            "key": "mobile_number"
+          },
+          {
+            "value": "{{widgets.CreateConversation.parsed.ConversationSid}}",
+            "key": "ConversationSid"
+          },
+          {
+            "value": "{{widgets.CreateConversation.parsed.CallerSid}}",
+            "key": "CallerSid"
+          },
+          {
+            "value": "{{widgets.CreateConversation.parsed.VirtualAgentSid}}",
+            "key": "VirtualAgentSid"
+          },
+          {
+            "value": "{{widgets.CreateConversation.parsed.VirtualAgentIdentity}}",
+            "key": "VirtualAgentIdentity"
+          },
+          {
+            "value": "{{widgets.CreateConversation.parsed.CallerIdentity}}",
+            "key": "CallerIdentity"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CreateConversation",
+      "type": "run-function",
+      "transitions": [
+        {
+          "next": "connect_virtual_agent_1",
+          "event": "success"
+        },
+        {
+          "event": "fail"
+        }
+      ],
+      "properties": {
+        "service_sid": "",
+        "environment_sid": "",
+        "offset": {
+          "x": 200,
+          "y": 300
+        },
+        "function_sid": "",
+        "parameters": [
+          {
+            "value": "{{trigger.call.From}}",
+            "key": "From"
+          }
+        ],
+        "url": "https://dialogflowvoiceconversations-3973.twil.io/createConversation"
+      }
+    },
+    {
+      "name": "send_to_flex_1",
+      "type": "send-to-flex",
+      "transitions": [
+        {
+          "event": "callComplete"
+        },
+        {
+          "event": "failedToEnqueue"
+        },
+        {
+          "event": "callFailure"
+        }
+      ],
+      "properties": {
+        "offset": {
+          "x": 240,
+          "y": 930
+        },
+        "workflow": "WW23b3d203d14609185dc0a3194786598d",
+        "channel": "TCb67d518a3cb411fc62df876943400377",
+        "attributes": "{}"
+      }
+    }
+  ],
+  "initial_state": "Trigger",
+  "flags": {
+    "allow_concurrent_calls": true
+  }
+}
