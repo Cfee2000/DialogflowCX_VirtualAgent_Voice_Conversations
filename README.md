@@ -13,7 +13,7 @@
 
 ## How does this work?
 
-The Studio Flow has an initial transition on incoming call to a function called "createConversation.js" that always creates a new Conversation between the Caller and the Virtual Agent. Practically speaking, this involves creating a new Conversation, then creating 2 new Participants on the Conversation, namely the caller and the virtual agent. Currently, I'm creating these 2 participants as "Chat" participants. I give the Caller an Identity equal to their phone number, and I give the VirtualAgent a static Identity of "VirtualAgent".
+The Studio Flow has an initial transition on incoming call to a function called "createConversation" that always creates a new Conversation between the Caller and the Virtual Agent. Practically speaking, this involves creating a new Conversation, then creating 2 new Participants on the Conversation, namely the caller and the virtual agent. Currently, I'm creating these 2 participants as "Chat" participants. I give the Caller an Identity equal to their phone number, and I give the VirtualAgent a static Identity of "VirtualAgent".
 
 After the Conversation and Participants are created, the Function returns the SIDs and Identity values as JSON back to the Studio Flow for use downstream. And in fact, I set all of these values as Parameters on the VirtualAgent widget, which in practice means I'm setting up the Dialogflow CX VirtualAgent to have each of these values as Session Parameters throught the lifetime of the session, which also means they can then be leveraged in StatusCallbacks.
 
