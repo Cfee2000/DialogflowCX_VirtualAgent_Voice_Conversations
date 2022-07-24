@@ -1,6 +1,6 @@
 # DialogflowCX_VirtualAgent_Voice_Conversations
 
-''Steps:''
+##Steps:
 1. Create your own Functions Service. 
 2. Add the 2 functions here to your service (just copy/paste after naming the function).
 3. Import the Studio Flow JSON to a new Studio Flow. 
@@ -11,7 +11,7 @@
 8. Make sure your Dependencies in your Function Service are up to date (eg. the twilio node version should be 3.80.0, just to be safe)
 9. Update your StatusCallbackURL in the VirtualAgent widget configuration to point to your "virtualAgentStatusCallback" function
 
-''How does this work?''
+##How does this work?
 
 The Studio Flow has an initial transition on incoming call to a function called "createConversation.js" that always creates a new Conversation between the Caller and the Virtual Agent. Practically speaking, this involves creating a new Conversation, then creating 2 new Participants on the Conversation, namely the caller and the virtual agent. Currently, I'm creating these 2 participants as "Chat" participants. I give the Caller an Identity equal to their phone number, and I give the VirtualAgent a static Identity of "VirtualAgent".
 
